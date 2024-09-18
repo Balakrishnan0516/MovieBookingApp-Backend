@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Booking Confirmation</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            color: #333;
+        }
+        .container {
+            background-color: #ffffff;
+            max-width: 600px;
+            margin: 20px auto;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+        .header {
+            text-align: center;
+            background-color: #ff5722;
+            padding: 20px;
+            border-top-left-radius: 8px;
+            border-top-right-radius: 8px;
+            color: #ffffff;
+        }
+        .header h1 {
+            margin: 0;
+            font-size: 24px;
+        }
+        .movie-poster {
+            text-align: center;
+            margin: 20px 0;
+        }
+        .movie-poster img {
+            max-width: 100%;
+            border-radius: 8px;
+        }
+        .content {
+            padding: 20px;
+        }
+        .content h2 {
+            font-size: 20px;
+            color: #333;
+            margin-bottom: 10px;
+        }
+        .details {
+            margin-bottom: 20px;
+        }
+        .details p {
+            margin: 5px 0;
+            font-size: 16px;
+        }
+        .footer {
+            text-align: center;
+            padding: 20px;
+            background-color: #333;
+            color: #ffffff;
+            border-bottom-left-radius: 8px;
+            border-bottom-right-radius: 8px;
+        }
+        .footer p {
+            margin: 0;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <h1>Booking Confirmed!</h1>
+    </div>
+    <div class="movie-poster">
+        <img src="cid:movieImage" alt="Movie Poster" />
+    </div>
+    <div class="content">
+        <h2>Thank you for booking with us, [User's Name]!</h2>
+        <div class="details">
+            <p><strong>Movie:</strong> [Movie Title]</p>
+            <p><strong>Theatre:</strong> [Theatre Name]</p>
+            <p><strong>Location:</strong> [Theatre Location]</p>
+            <p><strong>Show Time:</strong> [Show Date] at [Show Time]</p>
+            <p><strong>Seats:</strong> [Selected Seats]</p>
+            <p><strong>Total Amount Paid:</strong> ₹[Total Amount]</p>
+        </div>
+        <p>Enjoy your movie!</p>
+    </div>
+    <div class="footer">
+        <p>&copy; 2024 Movie Booking. All rights reserved.</p>
+    </div>
+</div>
+</body>
+</html>
