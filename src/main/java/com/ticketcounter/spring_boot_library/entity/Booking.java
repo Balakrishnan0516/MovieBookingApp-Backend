@@ -3,6 +3,8 @@ package com.ticketcounter.spring_boot_library.entity;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.util.List;
+
 @Entity
 @Table(name="bookings")
 @Data
@@ -19,6 +21,9 @@ public class Booking {
     @ManyToOne
     @JoinColumn(name = "show_id", nullable = false)
     private Show show;
+
+    @OneToMany(mappedBy = "booking")
+    private List<BookedSeat> bookedSeats;
 
     @Column(name="number_of_seats")
     private int numberOfSeats;

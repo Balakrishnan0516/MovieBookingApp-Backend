@@ -32,6 +32,10 @@ public class Movie implements Serializable {
     @Column(length = 255,name="image")
     private byte[] image;
 
+    @Lob
+    @Column(length = 255,name="horizontal_image")
+    private byte[] horizontalImage;
+
     @Column(length = 255,name="youtube_url")
     private String youtubeUrl;
 

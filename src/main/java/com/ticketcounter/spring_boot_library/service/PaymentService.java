@@ -43,44 +43,54 @@ public class PaymentService {
 
     @Transactional
     public void processPayment(PaymentRequest paymentRequest) throws MessagingException {
-
+        // Find the show entity
         Optional<Show> showOptional = showRepository.findById(paymentRequest.getShowId());
         Show show = showOptional.orElseThrow(() -> new RuntimeException("Show not found"));
 
+        // Create and save booking entity
         Booking booking = new Booking();
         booking.setUser(userService.getUserByUserId(paymentRequest.getUserId()));
         booking.setShow(show);
         booking.setNumberOfSeats(paymentRequest.getSelectedSeats().size());
         booking.setStatus("Confirmed");
         booking.setAmountPaid(paymentRequest.getTotalAmount());
-        bookingRepository.save(booking);
+        booking = bookingRepository.save(booking); // Save and get the saved instance
 
-    paymentRequest.getSelectedSeats().forEach(seat -> {
+        // Loop through selected seats and book them
+        for (String seatNumber : paymentRequest.getSelectedSeats()) {
+            // Find seat based on seat number, show, and theatre
+            Optional<Seat> seatOptional = seatRepository.findByTheatreIdAndShowIdAndSeatNumber(
+                    show.getTheatre().getId(), show.getId(), seatNumber);
 
-        Optional<Seat> seatOptional = seatRepository.findBySeatNumber(seat); // Now find by seat number
-        Seat seatEntity = seatOptional.orElseThrow(() -> new RuntimeException("Seat not found"));
+            Seat seatEntity = seatOptional.orElseThrow(() -> new RuntimeException("Seat not found: " + seatNumber));
 
-        BookedSeat seatBooked = new BookedSeat();
-        seatBooked.setUser(userService.getUserByUserId(paymentRequest.getUserId()));
-        seatBooked.setShow(show);
-        seatBooked.setSeat(seatEntity);
-        bookedSeatsRepository.save(seatBooked);
-    });
+            // Check if the seat is already booked
+            if (bookedSeatsRepository.existsBySeatAndShow(seatEntity, show)) {
+                throw new RuntimeException("Seat already booked: " + seatNumber);
+            }
+
+            // Create and save booked seat entity
+            BookedSeat seatBooked = new BookedSeat();
+            seatBooked.setUser(userService.getUserByUserId(paymentRequest.getUserId()));
+            seatBooked.setShow(show);
+            seatBooked.setSeat(seatEntity);
+            seatBooked.setBooking(booking);
+            bookedSeatsRepository.save(seatBooked);
+        }
+
+        // Prepare email content and send email
         String movieImageCid = "movieImage";
         String emailContent = generateEmailContent(paymentRequest, movieImageCid);
         String userEmail = userService.getUserByUserId(paymentRequest.getUserId()).getEmail();
 
-
         byte[] movieImageData = show.getMovie().getImage();
-
         emailService.sendEmail(userEmail, "Booking Confirmation", emailContent, movieImageData, movieImageCid);
     }
 
     private String generateEmailContent(PaymentRequest paymentRequest, String movieImageCid) {
-
+        // Build email content (no changes necessary here)
         Optional<Show> showOptional = showRepository.findById(paymentRequest.getShowId());
         Show show = showOptional.orElseThrow(() -> new RuntimeException("Show not found"));
-        String movieImage = Base64.getEncoder().encodeToString(show.getMovie().getImage());
 
         StringBuilder content = new StringBuilder();
         content.append("<html>")
@@ -124,3 +134,4 @@ public class PaymentService {
         return content.toString();
     }
 }
+

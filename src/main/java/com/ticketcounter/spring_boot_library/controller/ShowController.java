@@ -1,5 +1,8 @@
 package com.ticketcounter.spring_boot_library.controller;
 
+import com.ticketcounter.spring_boot_library.dto.ShowRequestDTO;
+import com.ticketcounter.spring_boot_library.dto.TheatreRequestDTO;
+import com.ticketcounter.spring_boot_library.entity.Movie;
 import com.ticketcounter.spring_boot_library.entity.Show;
 import com.ticketcounter.spring_boot_library.entity.Theatre;
 import com.ticketcounter.spring_boot_library.service.ShowService;
@@ -31,5 +34,22 @@ public class ShowController {
     }
 
 
+    @PostMapping("/add-show")
+    public ResponseEntity<String> performAddShow(@RequestBody ShowRequestDTO showRequestDTO){
+        String responseMessage = showService.addShow(showRequestDTO);
+        return ResponseEntity.ok(responseMessage);
+    }
+
+
+    @GetMapping("/shows")
+    public List<Show> getAllShows() {
+        return showService.getAllShows();
+    }
+
+    @GetMapping("/movies-shows-by-theatre/{theatreId}")
+    public ResponseEntity<Map<Movie, List<Show>>> getMoviesAndShowsByTheatre(@PathVariable Long theatreId) {
+        Map<Movie, List<Show>> moviesShowsForATheatre = showService.getMoviesAndShowsByTheatreId(theatreId);
+        return ResponseEntity.ok(moviesShowsForATheatre);
+    }
 }
 

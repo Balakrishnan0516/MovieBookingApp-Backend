@@ -1,9 +1,12 @@
 package com.ticketcounter.spring_boot_library.controller;
 
+import com.ticketcounter.spring_boot_library.dto.SeatDTO;
 import com.ticketcounter.spring_boot_library.dto.SeatProjection;
+import com.ticketcounter.spring_boot_library.dto.ShowRequestDTO;
 import com.ticketcounter.spring_boot_library.entity.Seat;
 import com.ticketcounter.spring_boot_library.service.SeatService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,9 +30,25 @@ public class SeatController {
         return ResponseEntity.ok(seats);
     }
 
-    @PostMapping("/seats-totalRate")
-    public int getTotalSeatRate(@RequestBody List<String> seatNumbers) {
-        return seatService.getRateForGivenSeatIds(seatNumbers);
+    @PostMapping("/seats-totalRate/{show_id}")
+    public ResponseEntity<Integer> getTotalSeatRate(@RequestBody List<String> seatNumbers, @PathVariable Long show_id) {
+        try {
+            int totalRate = seatService.getRateForGivenSeatIds(seatNumbers, show_id);
+            return ResponseEntity.ok(totalRate);
+        } catch (Exception e) {
+            // Handle any exceptions (e.g., invalid seat numbers or show ID)
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+        }
     }
 
+    @PostMapping("/add-seat")
+    public ResponseEntity<?> addSeats(@RequestBody SeatDTO seatDTO) {
+        try {
+            List<Seat> seats = seatService.addSeats(seatDTO);
+            return new ResponseEntity<>(seats, HttpStatus.CREATED);
+        } catch (Exception e) {
+            // Handle any exceptions and return an error response
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
 }
