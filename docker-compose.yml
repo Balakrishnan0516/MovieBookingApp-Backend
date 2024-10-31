@@ -1,0 +1,20 @@
+version: '3.8'
+services:
+  my_mysql:
+    image: mysql:5.7
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: moviedb
+    ports:
+      - "3307:3306" # Change this to 3307 if 3306 is occupied
+
+  my_spring_boot_app:
+    image: com.ticketcounter/movie-booking-app-spring-boot-library:0.0.2-SNAPSHOT
+    ports:
+      - "8080:8080"
+    depends_on:
+      - my_mysql
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://my_mysql:3306/moviedb # Use internal Docker network address
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: root

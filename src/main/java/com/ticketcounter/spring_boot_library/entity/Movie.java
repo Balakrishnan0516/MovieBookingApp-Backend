@@ -10,7 +10,75 @@ public class Movie implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @Id
+    public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
+	public String getGenre() {
+		return genre;
+	}
+
+	public void setGenre(String genre) {
+		this.genre = genre;
+	}
+
+	public String getDirector() {
+		return director;
+	}
+
+	public void setDirector(String director) {
+		this.director = director;
+	}
+
+	public String getSynopsis() {
+		return synopsis;
+	}
+
+	public void setSynopsis(String synopsis) {
+		this.synopsis = synopsis;
+	}
+
+	public byte[] getImage() {
+		return image;
+	}
+
+	public void setImage(byte[] image) {
+		this.image = image;
+	}
+
+	public byte[] getHorizontalImage() {
+		return horizontalImage;
+	}
+
+	public void setHorizontalImage(byte[] horizontalImage) {
+		this.horizontalImage = horizontalImage;
+	}
+
+	public String getYoutubeUrl() {
+		return youtubeUrl;
+	}
+
+	public void setYoutubeUrl(String youtubeUrl) {
+		this.youtubeUrl = youtubeUrl;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+
+	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="id")
     private Long id;

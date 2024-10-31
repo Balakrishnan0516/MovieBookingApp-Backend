@@ -11,7 +11,47 @@ import java.time.LocalTime;
 @Data
 public class Show {
 
-    @Id
+    public long getId() {
+		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
+	}
+
+	public Movie getMovie() {
+		return movie;
+	}
+
+	public void setMovie(Movie movie) {
+		this.movie = movie;
+	}
+
+	public Theatre getTheatre() {
+		return theatre;
+	}
+
+	public void setTheatre(Theatre theatre) {
+		this.theatre = theatre;
+	}
+
+	public LocalDate getDate() {
+		return date;
+	}
+
+	public void setDate(LocalDate date) {
+		this.date = date;
+	}
+
+	public LocalTime getTime() {
+		return time;
+	}
+
+	public void setTime(LocalTime time) {
+		this.time = time;
+	}
+
+	@Id
     @GeneratedValue(strategy =  GenerationType.IDENTITY)
     private long id;
 

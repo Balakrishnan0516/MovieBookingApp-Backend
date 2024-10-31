@@ -9,7 +9,63 @@ import java.util.List;
 
 @Data
 public class PaymentRequest {
-    @NotNull
+    public Long getUserId() {
+		return userId;
+	}
+
+	public void setUserId(Long userId) {
+		this.userId = userId;
+	}
+
+	public List<String> getSelectedSeats() {
+		return selectedSeats;
+	}
+
+	public void setSelectedSeats(List<String> selectedSeats) {
+		this.selectedSeats = selectedSeats;
+	}
+
+	public Double getTotalAmount() {
+		return totalAmount;
+	}
+
+	public void setTotalAmount(Double totalAmount) {
+		this.totalAmount = totalAmount;
+	}
+
+	public Long getShowId() {
+		return showId;
+	}
+
+	public void setShowId(Long showId) {
+		this.showId = showId;
+	}
+
+	public String getCardNumber() {
+		return cardNumber;
+	}
+
+	public void setCardNumber(String cardNumber) {
+		this.cardNumber = cardNumber;
+	}
+
+	public String getCvv() {
+		return cvv;
+	}
+
+	public void setCvv(String cvv) {
+		this.cvv = cvv;
+	}
+
+	public String getExpiryDate() {
+		return expiryDate;
+	}
+
+	public void setExpiryDate(String expiryDate) {
+		this.expiryDate = expiryDate;
+	}
+
+	@NotNull
     private Long userId;
 
     @NotNull

@@ -10,7 +10,10 @@ public class WebConfig implements WebMvcConfigurer {
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/api/**")
-                .allowedOrigins("http://localhost:3000") // frontend origin
+                .allowedOrigins(
+                        "http://balakrish-movie-booking-app.s3-website-ap-southeast-2.amazonaws.com", // Production frontend origin
+                        "http://localhost:3000" // Local development frontend origin
+                )
                 .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
                 .allowedHeaders("*")
                 .allowCredentials(true);

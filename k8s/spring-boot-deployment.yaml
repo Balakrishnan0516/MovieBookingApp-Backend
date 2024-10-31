@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: my-spring-boot-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: my-spring-boot-app
+  template:
+    metadata:
+      labels:
+        app: my-spring-boot-app
+    spec:
+      containers:
+        - name: spring-boot-app
+          image: 703671895018.dkr.ecr.ap-southeast-2.amazonaws.com/movie-booking-app/ticket-counter:latest
+          ports:
+            - containerPort: 8080
+          env:
+            - name: SPRING_DATASOURCE_URL
+              value: "jdbc:mysql://my-mysql:3306/moviedb"
+            - name: SPRING_DATASOURCE_USERNAME
+              value: "root"
+            - name: SPRING_DATASOURCE_PASSWORD
+              value: "root"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: my-spring-boot-app
+spec:
+  type: LoadBalancer
+  ports:
+    - port: 8080
+      targetPort: 8080
+  selector:
+    app: my-spring-boot-app

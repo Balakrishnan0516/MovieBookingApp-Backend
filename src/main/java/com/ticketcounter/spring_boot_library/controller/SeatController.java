@@ -14,7 +14,10 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/auth")
-@CrossOrigin(origins = "http://localhost:3000") // frontend origin
+@CrossOrigin(origins = {
+        "http://balakrish-movie-booking-app.s3-website-ap-southeast-2.amazonaws.com",
+        "http://localhost:3000"
+}) // frontend origin
 public class SeatController {
 
     @Autowired
